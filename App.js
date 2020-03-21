@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+
+import Title from './components/Title';
 import Button from './components/Button';
 
 export default class HelloHangboard extends Component {
@@ -10,22 +12,6 @@ export default class HelloHangboard extends Component {
         <Button />
       </View>
     );
-  }
-}
-
-const styles = StyleSheet.create({
-  headline: {
-    fontSize: 36,
-    fontWeight: 'bold',
-    margin: 16
-  }
-});
-
-class Title extends Component {
-  render() {
-    return (
-      <Text style={styles.headline}>Hello, Hangboard</Text>
-    )
   }
 }
 
