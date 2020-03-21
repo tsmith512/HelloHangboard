@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Vibration } from 'react-native';
 
 import Button from './Button';
 
@@ -15,10 +15,14 @@ export default class Segment extends React.Component {
   componentDidMount() {
     // We're gonna count down from ten.
     setInterval(() => (
-      this.setState(previousState => (
-        { secondsLeft: (previousState.secondsLeft - 1) >= 0 ? previousState.secondsLeft - 1 : 10}
-      ))
-    ), 1000);
+      this.setState(previousState => {
+        if (previousState.secondsLeft - 1 == 0) {
+          Vibration.vibrate(1000);
+          return { secondsLeft: 10 }
+        } else {
+          return { secondsLeft: previousState.secondsLeft - 1 }
+        }
+      })), 1000);
   }
 
   state = {secondsLeft: 10 };
