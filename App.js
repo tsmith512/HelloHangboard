@@ -1,14 +1,29 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default class HelloHangboard extends Component {
   render() {
     return (
       <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-        <Text style={{textAlign: "center", fontSize: 32}}>Hello, Hangboard.</Text>
+        <Title />
         <Segment />
       </View>
     );
+  }
+}
+
+const styles = StyleSheet.create({
+  headline: {
+    fontSize: 36,
+    fontWeight: 'bold'
+  }
+});
+
+class Title extends Component {
+  render() {
+    return (
+      <Text style={styles.headline}>Hello, Hangboard</Text>
+    )
   }
 }
 
