@@ -17,7 +17,7 @@ class Segment extends Component {
     // We're gonna count down from ten.
     setInterval(() => (
       this.setState(previousState => (
-        { secondsLeft: previousState.secondsLeft - 1}
+        { secondsLeft: (previousState.secondsLeft - 1) >= 0 ? previousState.secondsLeft - 1 : 10}
       ))
     ), 1000);
   }
