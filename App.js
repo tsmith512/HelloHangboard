@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 export default class HelloHangboard extends Component {
   render() {
@@ -15,7 +15,26 @@ export default class HelloHangboard extends Component {
 const styles = StyleSheet.create({
   headline: {
     fontSize: 36,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    margin: 16
+  },
+
+  button: {
+    margin: 16,
+    padding: 16,
+    backgroundColor: '#333333',
+    borderRadius: 4
+  },
+
+  buttonGo: {
+    backgroundColor: '#00CC33'
+  },
+
+  buttonText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    textTransform:  'uppercase',
+    letterSpacing: 1
   }
 });
 
@@ -29,12 +48,14 @@ class Title extends Component {
 
 class StartButton extends Component {
   _onPressButton() {
-    alert('Test!');
+    alert('Yeah I still don\'t know about that...');
   }
 
   render() {
     return (
-      <Button title="Test" onPress={this._onPressButton} />
+      <TouchableOpacity style={[styles.button, styles.buttonGo]} onPress={this._onPressButton}>
+        <Text style={styles.buttonText}>Start</Text>
+      </TouchableOpacity>
     );
   }
 }
