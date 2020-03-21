@@ -6,17 +6,27 @@ export default class HelloHangboard extends Component {
     return (
       <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
         <Text style={{textAlign: "center", fontSize: 32}}>Hello, Hangboard.</Text>
-        <Text style={{textAlign: "center"}}>I'm stuck in my apartment because of coronavirus.</Text>
-        <PropTest name="Joe" />
+        <Segment />
       </View>
     );
   }
 }
 
-class PropTest extends Component {
+class Segment extends Component {
+  componentDidMount() {
+    // We're gonna count down from ten.
+    setInterval(() => (
+      this.setState(previousState => (
+        { secondsLeft: previousState.secondsLeft - 1}
+      ))
+    ), 1000);
+  }
+
+  state = {secondsLeft: 10 };
+
   render() {
     return (
-      <Text style={{textAlign: "center"}}>This is all {this.props.name}'s fault!</Text>
+      <Text>Time Remaining: {this.state.secondsLeft}</Text>
     )
   }
 }
