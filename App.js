@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import Title from './components/Title';
-import Button from './components/Button';
+import Welcome from './components/Welcome';
 
 export default class HelloHangboard extends Component {
   render() {
     return (
-      <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-        <Title />
-        <Button />
-      </View>
+      <Welcome />
     );
   }
 }
