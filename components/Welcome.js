@@ -5,11 +5,15 @@ import Title from './Title';
 import Button from './Button';
 
 export default class Welcome extends React.Component {
+  _start() {
+    alert('At least this is local now');
+  }
+
   render() {
     return (
       <View style={welcomeStyles.screen}>
         <Title />
-        <Button />
+        <Button title="Start" onPress={() => this._start()} />
       </View>
     );
   }
