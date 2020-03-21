@@ -4,11 +4,16 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 export default class Button extends React.Component {
   constructor(props) {
     super(props);
+
+    this.style = [buttonStyles.base];
+    if (this.props.hasOwnProperty('class')) {
+      this.style.push(buttonStyles[this.props.class]);
+    }
   }
 
   render() {
     return (
-      <TouchableOpacity style={[buttonStyles.base, buttonStyles.go]} onPress={this.props.onPress}>
+      <TouchableOpacity style={this.style} onPress={this.props.onPress}>
         <Text style={buttonStyles.text}>{this.props.title}</Text>
       </TouchableOpacity>
     );
@@ -32,5 +37,9 @@ const buttonStyles = StyleSheet.create({
 
   go: {
     backgroundColor: '#00CC33'
+  },
+
+  stop: {
+    backgroundColor: '#CC3300'
   }
 });
