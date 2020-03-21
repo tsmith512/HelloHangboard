@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 
 export default class HelloHangboard extends Component {
   render() {
     return (
       <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
         <Title />
-        <Segment />
+        <StartButton />
       </View>
     );
   }
@@ -24,6 +24,18 @@ class Title extends Component {
     return (
       <Text style={styles.headline}>Hello, Hangboard</Text>
     )
+  }
+}
+
+class StartButton extends Component {
+  _onPressButton() {
+    alert('Test!');
+  }
+
+  render() {
+    return (
+      <Button title="Test" onPress={this._onPressButton} />
+    );
   }
 }
 
