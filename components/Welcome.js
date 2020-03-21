@@ -5,8 +5,12 @@ import Title from './Title';
 import Button from './Button';
 
 export default class Welcome extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
   _start() {
-    alert('At least this is local now');
+    this.props.navigation.navigate('Segment');
   }
 
   render() {
