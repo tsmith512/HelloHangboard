@@ -6,11 +6,18 @@ import CircuitHandler from '../lib/CircuitHandler';
 
 export default class Segment extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
+
+    this.state = {
+      mode: false,
+      remaining: false,
+      buttonText: 'Start',
+      buttonClass: 'go'
+    };
   }
 
   _button() {
-    if (this.CircuitHandler.isReady()) {
+    if (this.CircuitHandler.isWaiting()) {
       // go
       this.CircuitHandler.start();
     } else {
@@ -19,33 +26,24 @@ export default class Segment extends React.Component {
     }
   }
 
-  _updateStep(data) {
+  _updateStep = (name, data) => {
     this.setState((previousState) => {
       return {
         mode: data.step.mode,
         remaining: data.remaining,
-        buttonText: (data.step.mode == "ready") ? 'Start' : 'Stop',
+        buttonText: (data.step.mode == "ready") ? 'Go' : 'Stop',
         buttonClass: (data.step.mode == "ready") ? 'go' : 'stop'
       }
     });
   }
 
   componentDidMount() {
-    this.CircuitHandler = new CircuitHandler();
-    this.CircuitHandler.events.on('countdown', _updateStep);
-    this.CircuitHandler.events.on('new step', _updateStep);
+    this.CircuitHandler = new CircuitHandler(this._updateStep);
   }
 
   componentWillUnmount() {
     // @TODO: Need to destroy the CircuitHandler object and clear its interval
   }
-
-  state = {
-    mode: false,
-    remaining: false,
-    buttonText: 'Start',
-    buttonClass: 'go'
-  };
 
   render() {
     return (
