@@ -5,6 +5,8 @@ export default class Button extends React.Component {
   constructor(props) {
     super(props);
 
+    // @TODO: How to handle this if the button "class" changes? This should be a
+    // state item, not something set once in the constructor
     this.style = [buttonStyles.base];
     if (this.props.hasOwnProperty('class')) {
       this.style.push(buttonStyles[this.props.class]);

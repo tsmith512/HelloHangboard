@@ -27,6 +27,10 @@ export default class Segment extends React.Component {
   }
 
   _updateStep = (name, data) => {
+    if (data.remaining === 0) {
+      // @TODO: Make a beep sound.
+      Vibration.vibrate(1000);
+    }
     this.setState((previousState) => {
       return {
         mode: data.step.mode,
@@ -48,8 +52,8 @@ export default class Segment extends React.Component {
   render() {
     return (
       <View style={segmentStyles.screen}>
-        <Text>{this.state.mode}</Text>
-        <Text>Duration: {this.state.remaining}</Text>
+        <Text style={segmentStyles.mode}>{this.state.mode}</Text>
+        <Text style={segmentStyles.seconds}>Duration: {this.state.remaining}</Text>
         <Button title={this.state.buttonText} class={this.state.buttonClass} onPress={() => this._button()} />
       </View>
     )
@@ -62,5 +66,18 @@ const segmentStyles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
-  }
+  },
+
+  mode: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    letterSpacing: 2
+  },
+
+  seconds: {
+    fontSize: 28,
+    fontWeight: 'bold',
+  },
+
 });
