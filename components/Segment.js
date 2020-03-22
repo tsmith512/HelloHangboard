@@ -2,66 +2,57 @@ import * as React from 'react';
 import { Text, View, StyleSheet, Vibration } from 'react-native';
 
 import Button from './Button';
+import CircuitHandler from '../lib/CircuitHandler';
 
 export default class Segment extends React.Component {
   constructor(props) {
     super(props)
   }
 
-  _stop() {
-    this.props.navigation.navigate('Welcome');
+  _button() {
+    if (this.CircuitHandler.isReady()) {
+      // go
+      this.CircuitHandler.start();
+    } else {
+      // stop
+      this.props.navigation.navigate('Welcome');
+    }
   }
 
-  _updateStep() {
+  _updateStep(data) {
     this.setState((previousState) => {
-      const newIndex = (previousState.index + 1) % previousState.circuit.length;
       return {
-        index: newIndex,
-        step: previousState.circuit[newIndex]
+        mode: data.step.mode,
+        remaining: data.remaining,
+        buttonText: (data.step.mode == "ready") ? 'Start' : 'Stop',
+        buttonClass: (data.step.mode == "ready") ? 'go' : 'stop'
       }
     });
-    this.timer = setTimeout(() => {this._updateStep();}, this.state.step.duration * 1000);
   }
 
   componentDidMount() {
-    this.timer = setTimeout(() => {
-      this._updateStep();
-    }, 2000);
+    this.CircuitHandler = new CircuitHandler();
+    this.CircuitHandler.events.on('countdown', _updateStep);
+    this.CircuitHandler.events.on('new step', _updateStep);
   }
 
   componentWillUnmount() {
-    clearTimeout(this.timer);
+    // @TODO: Need to destroy the CircuitHandler object and clear its interval
   }
 
   state = {
-    // @TODO / WIP: Legitimately a terrible way to do this! Also this should not
-    // be a state since the workout is a constant.
-    circuit: [
-      {mode: 'on', duration: 7},
-      {mode: 'off', duration: 3},
-      {mode: 'on', duration: 7},
-      {mode: 'off', duration: 3},
-      {mode: 'on', duration: 7},
-      {mode: 'off', duration: 3},
-      {mode: 'on', duration: 7},
-      {mode: 'off', duration: 3},
-      {mode: 'on', duration: 7},
-      {mode: 'off', duration: 3},
-      {mode: 'on', duration: 7},
-      {mode: 'off', duration: 3},
-      {mode: 'rest', duration: 60}
-    ],
-
-    index: -1,
-    step: {mode: 'ready'}
+    mode: false,
+    remaining: false,
+    buttonText: 'Start',
+    buttonClass: 'go'
   };
 
   render() {
     return (
       <View style={segmentStyles.screen}>
-        <Text>{this.state.step.mode}</Text>
-        <Text>Duration: {this.state.step.duration}</Text>
-        <Button title="Stop" class="stop" onPress={() => this._stop()} />
+        <Text>{this.state.mode}</Text>
+        <Text>Duration: {this.state.remaining}</Text>
+        <Button title={this.state.buttonText} class={this.state.buttonClass} onPress={() => this._button()} />
       </View>
     )
   }
