@@ -14,7 +14,7 @@ export default class Segment extends React.Component {
 
   componentDidMount() {
     // We're gonna count down from ten.
-    setInterval(() => (
+    this.interval = setInterval(() => (
       this.setState(previousState => {
         if (previousState.secondsLeft - 1 == 0) {
           Vibration.vibrate(1000);
@@ -23,6 +23,10 @@ export default class Segment extends React.Component {
           return { secondsLeft: previousState.secondsLeft - 1 }
         }
       })), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   state = {secondsLeft: 10 };
