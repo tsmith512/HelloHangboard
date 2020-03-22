@@ -12,29 +12,55 @@ export default class Segment extends React.Component {
     this.props.navigation.navigate('Welcome');
   }
 
+  _updateStep() {
+    this.setState((previousState) => {
+      const newIndex = (previousState.index + 1) % previousState.circuit.length;
+      return {
+        index: newIndex,
+        step: previousState.circuit[newIndex]
+      }
+    });
+    this.timer = setTimeout(() => {this._updateStep();}, this.state.step.duration * 1000);
+  }
+
   componentDidMount() {
-    // We're gonna count down from ten.
-    this.interval = setInterval(() => (
-      this.setState(previousState => {
-        if (previousState.secondsLeft - 1 == 0) {
-          Vibration.vibrate(1000);
-          return { secondsLeft: 10 }
-        } else {
-          return { secondsLeft: previousState.secondsLeft - 1 }
-        }
-      })), 1000);
+    this.timer = setTimeout(() => {
+      this._updateStep();
+    }, 2000);
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
+    clearTimeout(this.timer);
   }
 
-  state = {secondsLeft: 10 };
+  state = {
+    // @TODO / WIP: Legitimately a terrible way to do this! Also this should not
+    // be a state since the workout is a constant.
+    circuit: [
+      {mode: 'on', duration: 7},
+      {mode: 'off', duration: 3},
+      {mode: 'on', duration: 7},
+      {mode: 'off', duration: 3},
+      {mode: 'on', duration: 7},
+      {mode: 'off', duration: 3},
+      {mode: 'on', duration: 7},
+      {mode: 'off', duration: 3},
+      {mode: 'on', duration: 7},
+      {mode: 'off', duration: 3},
+      {mode: 'on', duration: 7},
+      {mode: 'off', duration: 3},
+      {mode: 'rest', duration: 60}
+    ],
+
+    index: -1,
+    step: {mode: 'ready'}
+  };
 
   render() {
     return (
       <View style={segmentStyles.screen}>
-        <Text>Time Remaining: {this.state.secondsLeft}</Text>
+        <Text>{this.state.step.mode}</Text>
+        <Text>Duration: {this.state.step.duration}</Text>
         <Button title="Stop" class="stop" onPress={() => this._stop()} />
       </View>
     )
