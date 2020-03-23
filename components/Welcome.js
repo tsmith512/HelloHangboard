@@ -17,7 +17,7 @@ export default class Welcome extends React.Component {
     return (
       <View style={welcomeStyles.screen}>
         <Title />
-        <Button title="Start" class="go" onPress={() => this._start()} />
+        <Button title="Joe's Circuit #1" class="go" onPress={() => this._start()} />
       </View>
     );
   }

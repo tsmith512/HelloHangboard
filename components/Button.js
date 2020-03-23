@@ -4,19 +4,12 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 export default class Button extends React.Component {
   constructor(props) {
     super(props);
-
-    // @TODO: How to handle this if the button "class" changes? This should be a
-    // state item, not something set once in the constructor
-    this.style = [buttonStyles.base];
-    if (this.props.hasOwnProperty('class')) {
-      this.style.push(buttonStyles[this.props.class]);
-    }
   }
 
   render() {
     return (
-      <TouchableOpacity style={this.style} onPress={this.props.onPress}>
-        <Text style={buttonStyles.text}>{this.props.title}</Text>
+      <TouchableOpacity style={buttonStyles.base} onPress={this.props.onPress}>
+        <Text style={[buttonStyles.text, buttonStyles[this.props.class]]}>{this.props.title}</Text>
       </TouchableOpacity>
     );
   }
@@ -26,8 +19,12 @@ const buttonStyles = StyleSheet.create({
   base: {
     margin: 16,
     padding: 16,
-    backgroundColor: '#333333',
-    borderRadius: 4
+    backgroundColor: '#EEE',
+    borderRadius: 4,
+    borderColor: '#CCCCCC',
+    borderWidth: 1,
+    shadowColor: '#000000',
+    shadowOpacity: .025,
   },
 
   text: {
@@ -38,10 +35,10 @@ const buttonStyles = StyleSheet.create({
   },
 
   go: {
-    backgroundColor: '#00CC33'
+    color: '#009900'
   },
 
   stop: {
-    backgroundColor: '#CC3300'
+    color: '#CC0000'
   }
 });
