@@ -47,6 +47,7 @@ export default class Segment extends React.Component {
 
   componentWillUnmount() {
     // @TODO: Need to destroy the CircuitHandler object and clear its interval
+    this.CircuitHandler.stop();
   }
 
   render() {
