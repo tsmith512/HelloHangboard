@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Vibration } from 'react-native';
+import { Text, View, StyleSheet, Vibration, ToastAndroid } from 'react-native';
+import { Audio } from 'expo-av';
 
 import Button from './Button';
 import CircuitHandler from '../lib/CircuitHandler';
@@ -16,6 +17,18 @@ export default class Segment extends React.Component {
     };
     // @TODO: The notes above are just dumb, clearly I need to fire an update
     // when this component and that class are instantiated.
+
+    this.tones = {};
+    this._loadNotificationSounds();
+  }
+
+  _loadNotificationSounds = async() => {
+    this.tones.low = new Audio.Sound();
+    this.tones.low.loadAsync(require('../assets/sounds/beep-low.wav'));
+    this.tones.regular = new Audio.Sound();
+    this.tones.regular.loadAsync(require('../assets/sounds/beep-regular.wav'));
+    this.tones.high = new Audio.Sound();
+    this.tones.high.loadAsync(require('../assets/sounds/beep-high.wav'));
   }
 
   _button() {
@@ -29,10 +42,31 @@ export default class Segment extends React.Component {
   }
 
   _updateStep = (name, data) => {
-    if (data.remaining === 0) {
-      // @TODO: Make a beep sound.
-      Vibration.vibrate(1000);
+    const beep = new Audio.Sound();
+
+    // In a warning/rest state:
+    if (['warn', 'rest'].indexOf(data.step.mode) > -1) {
+      // Do a 3-beep countdown at the end:
+      if (data.remaining < 3) {
+        this._beep('low');
+      }
     }
+
+    // In an activity state like on/off:
+    else {
+      // Mid-beep at the end:
+      if (data.remaining === 0) {
+        this._beep('regular');
+      }
+
+      // Then high beep to hang, low beep to release:
+      if (name == 'new step') {
+        const tone = (data.step.mode == 'on') ? 'high' : 'low';
+        this._beep(tone);
+      }
+    }
+
+    // Update the display state
     this.setState((previousState) => {
       return {
         mode: data.step.mode,
@@ -41,6 +75,16 @@ export default class Segment extends React.Component {
         buttonClass: (data.step.mode == "ready") ? 'go' : 'stop'
       }
     });
+  }
+
+  _beep = async(tone) => {
+    await this.tones[tone].playAsync();
+    this.tones[tone].setPositionAsync(0);
+    try {
+      // Your sound is playing!
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   componentDidMount() {
