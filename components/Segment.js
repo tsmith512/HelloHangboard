@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Vibration, ToastAndroid } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { Audio } from 'expo-av';
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 
 import Button from './Button';
 import CircuitHandler from '../lib/CircuitHandler';
+import Workouts from '../lib/Workouts';
+
 
 export default class Segment extends React.Component {
   constructor(props) {
@@ -105,9 +107,10 @@ export default class Segment extends React.Component {
     // it because that's how responsible engineering works, right?
     return (
       <View style={[segmentStyles.screen, segmentStyles['screen' + this.state.mode]]}>
-        <Text style={segmentStyles.titleText}>Joe's Circuit #1</Text>
+        <Text style={segmentStyles.titleText}>{Workouts.joe.title}</Text>
+        {this.state.mode == 'ready' && <Text style={segmentStyles.descText}>{Workouts.joe.description}</Text>}
         <Text style={segmentStyles.modeText}>{this.state.mode}</Text>
-        <Text style={segmentStyles.secondsText}>{this.state.remaining}</Text>
+        {this.state.remaining !== false && <Text style={segmentStyles.secondsText}>{this.state.remaining}</Text>}
         <Button title={this.state.buttonText} class={this.state.buttonClass} onPress={() => this._button()} />
       </View>
     )
@@ -143,13 +146,21 @@ const segmentStyles = StyleSheet.create({
   },
 
   titleText: {
-    fontSize: 18,
+    fontSize: 22,
     textTransform: 'uppercase',
     fontWeight: 'bold',
     letterSpacing: 2,
     paddingBottom: 8,
     borderBottomWidth: 1,
     marginBottom: 8,
+  },
+
+  descText: {
+    fontSize: 18,
+    textAlign: 'center',
+    fontStyle: 'italic',
+    width: '80%',
+    marginTop: 16,
   },
 
   modeText: {
