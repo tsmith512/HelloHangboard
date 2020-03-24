@@ -9,14 +9,14 @@ export default class Segment extends React.Component {
   constructor(props) {
     super(props);
 
+    // Put safe defaults on the default states, but these will immediately be
+    // updated when the workout is instantiated.
     this.state = {
-      mode: false, // @TODO: Can this be "ready" (step 0)? How do we get that?
-      remaining: false, // @TODO: Warn the user that manual input is required if there's no timeout set
-      buttonText: 'Start', // @TODO: There's logic to set this in _updateStep but that doesn't run yet
+      mode: false,
+      remaining: false,
+      buttonText: 'Start',
       buttonClass: 'go'
     };
-    // @TODO: The notes above are just dumb, clearly I need to fire an update
-    // when this component and that class are instantiated.
 
     this.tones = {};
     this._loadNotificationSounds();
@@ -60,7 +60,7 @@ export default class Segment extends React.Component {
       }
 
       // Then high beep to hang, low beep to release:
-      if (name == 'new step') {
+      if (name == 'new step' && data.step.mode != 'ready') {
         const tone = (data.step.mode == 'on') ? 'high' : 'low';
         this._beep(tone);
       }
@@ -120,7 +120,11 @@ const segmentStyles = StyleSheet.create({
   },
 
   screenready: {
-    backgroundColor: '#EEEEEE',
+    backgroundColor: '#6699CC',
+  },
+
+  screenwarn: {
+    backgroundColor: '#FFCC33',
   },
 
   screenon: {
