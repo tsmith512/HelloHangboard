@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, ToastAndroid, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { Audio } from 'expo-av';
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 
@@ -23,7 +23,8 @@ export default class Segment extends React.Component {
 
     // The button on the Welcome screen passes in the selected circuit as a
     // routing parameter, which would be clunky to access frequently.
-    this.workout = Workouts[this.props.route.params.workout];
+    this.workoutID = this.props.route.params.workout;
+    this.workout = Workouts[this.workoutID];
 
     this.tones = {};
     this._loadNotificationSounds();
@@ -94,7 +95,7 @@ export default class Segment extends React.Component {
   }
 
   componentDidMount() {
-    this.CircuitHandler = new CircuitHandler(this._updateStep);
+    this.CircuitHandler = new CircuitHandler(this.workoutID, this._updateStep);
     activateKeepAwake();
   }
 
@@ -144,6 +145,7 @@ const segmentStyles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 8,
     elevation: 4,
+    padding: 16,
   },
 
   screenready: { backgroundColor: '#007AFF' },
@@ -153,10 +155,10 @@ const segmentStyles = StyleSheet.create({
   screenrest: { backgroundColor: '#66CC66' },
 
   titleText: {
-    fontSize: 22,
+    fontSize: 16,
     textTransform: 'uppercase',
     fontWeight: 'bold',
-    letterSpacing: 2,
+    letterSpacing: 1,
     paddingBottom: 8,
     borderBottomWidth: 1,
     marginBottom: 8,

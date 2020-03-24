@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { Image, StyleSheet, Text } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import titleImage from '../assets/title.png';
 
 export default class Title extends React.Component {
   render() {
     return (
-      <Image source={titleImage} style={{ width: 285, height: 68 }} />
+      <View style={{alignItems: 'center'}}>
+        <Image source={titleImage} style={{ width: 285, height: 68 }} />
+      </View>
     )
   }
 }
