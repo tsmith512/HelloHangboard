@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, ToastAndroid, StyleSheet } from 'react-native';
 import { Audio } from 'expo-av';
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 
@@ -20,6 +20,10 @@ export default class Segment extends React.Component {
       buttonText: 'Start',
       buttonClass: 'go'
     };
+
+    // The button on the Welcome screen passes in the selected circuit as a
+    // routing parameter, which would be clunky to access frequently.
+    this.workout = Workouts[this.props.route.params.workout];
 
     this.tones = {};
     this._loadNotificationSounds();
@@ -107,8 +111,8 @@ export default class Segment extends React.Component {
     return (
       <View style={[segmentStyles.container, segmentStyles['container' + this.state.mode]]}>
         <View style={[segmentStyles.screen, segmentStyles['screen' + this.state.mode]]}>
-          <Text style={segmentStyles.titleText}>{Workouts.joe.title}</Text>
-          {this.state.mode == 'ready' && <Text style={segmentStyles.descText}>{Workouts.joe.description}</Text>}
+          <Text style={segmentStyles.titleText}>{this.workout.title}</Text>
+          {this.state.mode == 'ready' && <Text style={segmentStyles.descText}>{this.workout.description}</Text>}
           <Text style={segmentStyles.modeText}>{this.state.mode}</Text>
           {this.state.remaining !== false && <Text style={segmentStyles.secondsText}>{this.state.remaining}</Text>}
           <Button title={this.state.buttonText} class='light' onPress={() => this._button()} />
