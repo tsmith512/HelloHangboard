@@ -75,7 +75,6 @@ export default class Segment extends React.Component {
         mode: data.step.mode,
         remaining: data.remaining,
         buttonText: (data.step.mode == "ready") ? 'Start' : 'Exit',
-        buttonClass: (data.step.mode == "ready") ? 'go' : 'stop'
       }
     });
   }
@@ -106,12 +105,14 @@ export default class Segment extends React.Component {
     // we only have one, and I don't have a Workout class yet, so just hardcode
     // it because that's how responsible engineering works, right?
     return (
-      <View style={[segmentStyles.screen, segmentStyles['screen' + this.state.mode]]}>
-        <Text style={segmentStyles.titleText}>{Workouts.joe.title}</Text>
-        {this.state.mode == 'ready' && <Text style={segmentStyles.descText}>{Workouts.joe.description}</Text>}
-        <Text style={segmentStyles.modeText}>{this.state.mode}</Text>
-        {this.state.remaining !== false && <Text style={segmentStyles.secondsText}>{this.state.remaining}</Text>}
-        <Button title={this.state.buttonText} class={this.state.buttonClass} onPress={() => this._button()} />
+      <View style={[segmentStyles.container, segmentStyles['container' + this.state.mode]]}>
+        <View style={[segmentStyles.screen, segmentStyles['screen' + this.state.mode]]}>
+          <Text style={segmentStyles.titleText}>{Workouts.joe.title}</Text>
+          {this.state.mode == 'ready' && <Text style={segmentStyles.descText}>{Workouts.joe.description}</Text>}
+          <Text style={segmentStyles.modeText}>{this.state.mode}</Text>
+          {this.state.remaining !== false && <Text style={segmentStyles.secondsText}>{this.state.remaining}</Text>}
+          <Button title={this.state.buttonText} class='light' onPress={() => this._button()} />
+        </View>
       </View>
     )
   }
@@ -119,31 +120,33 @@ export default class Segment extends React.Component {
 
 const segmentStyles = StyleSheet.create({
   // @TODO: This is the same "screen" style from Welcome, make this shareable/DRY
+  container: {
+    backgroundColor: '#EEEEEE',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'stretch',
+    padding: 32,
+  },
+
+  containerready: { backgroundColor: '#003E80' },
+  containerwarn: { backgroundColor: '#806600' },
+  containeron: { backgroundColor: '#800600' },
+  containeroff: { backgroundColor: '#804A00' },
+  containerrest: { backgroundColor: '#206020' },
+
   screen: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 8,
+    elevation: 4,
   },
 
-  screenready: {
-    backgroundColor: '#007AFF',
-  },
-
-  screenwarn: {
-    backgroundColor: '#FFCC00',
-  },
-
-  screenon: {
-    backgroundColor: '#FF3B30',
-  },
-
-  screenoff: {
-    backgroundColor: '#FF9500',
-  },
-
-  screenrest: {
-    backgroundColor: '#66CC66',
-  },
+  screenready: { backgroundColor: '#007AFF' },
+  screenwarn: { backgroundColor: '#FFCC00' },
+  screenon: { backgroundColor: '#FF3B30' },
+  screenoff: { backgroundColor: '#FF9500' },
+  screenrest: { backgroundColor: '#66CC66' },
 
   titleText: {
     fontSize: 22,
@@ -159,7 +162,6 @@ const segmentStyles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
     fontStyle: 'italic',
-    width: '80%',
     marginTop: 16,
   },
 

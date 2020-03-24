@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 import Title from './Title';
 import Button from './Button';
@@ -15,19 +15,35 @@ export default class Welcome extends React.Component {
 
   render() {
     return (
-      <View style={welcomeStyles.screen}>
-        <Title />
-        <Button title="Joe's Circuit #1" onPress={() => this._start()} />
+      <View style={welcomeStyles.container}>
+        <View style={welcomeStyles.main}>
+          <Title />
+          <Button title="Joe's Circuit #1" class='dark' onPress={() => this._start()} />
+        </View>
+        <Text style={welcomeStyles.footer}>A very experimental take on a HelloWorld.</Text>
       </View>
     );
   }
 }
 
 const welcomeStyles = StyleSheet.create({
-  screen: {
+  container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
+  },
+
+  main: {
+    padding: 16,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 8,
+    elevation: 4
+  },
+
+  footer: {
+    margin: 32,
+    color: '#999999',
+    fontStyle: 'italic',
   }
 });

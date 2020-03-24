@@ -8,8 +8,8 @@ export default class Button extends React.Component {
 
   render() {
     return (
-      <TouchableOpacity style={buttonStyles.base} onPress={this.props.onPress}>
-        <Text style={[buttonStyles.text, buttonStyles[this.props.class]]}>{this.props.title}</Text>
+      <TouchableOpacity style={[buttonStyles.base, buttonStyles[this.props.class + 'Button']]} onPress={this.props.onPress}>
+        <Text style={[buttonStyles.text, buttonStyles[this.props.class + 'ButtonText']]}>{this.props.title}</Text>
       </TouchableOpacity>
     );
   }
@@ -19,28 +19,36 @@ const buttonStyles = StyleSheet.create({
   base: {
     margin: 16,
     padding: 16,
-    backgroundColor: '#333333',
     borderRadius: 4,
-    borderColor: '#222222',
     borderWidth: 1,
-    shadowColor: '#000000',
     shadowOpacity: .25,
     shadowOffset: {height: 1, width: 1},
+    shadowColor: '#000000',
     elevation: 4,
   },
 
+  lightButton: {
+    backgroundColor: '#FFFFFF',
+    borderColor: '#EEEEEE',
+  },
+
+  darkButton: {
+    backgroundColor: '#333333',
+    borderColor: '#222222',
+  },
+
   text: {
-    color: '#EEEEEE',
     fontWeight: 'bold',
     textTransform:  'uppercase',
     letterSpacing: 1,
   },
 
-  go: {
-    color: '#4CD964'
+  lightButtonText: {
+    color: '#222222',
   },
 
-  stop: {
-    color: '#FF3B30'
-  }
+  darkButtonText: {
+    color: '#EEEEEE',
+  },
+
 });
