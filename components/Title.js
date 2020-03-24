@@ -12,6 +12,7 @@ export default class Title extends React.Component {
 
 const headlineStyles = StyleSheet.create({
   title: {
+    color: '#FFFFFF',
     fontSize: 36,
     fontWeight: 'bold',
     margin: 16

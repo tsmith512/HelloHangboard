@@ -119,7 +119,7 @@ const segmentStyles = StyleSheet.create({
   screen: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 
   screenready: {
@@ -143,21 +143,22 @@ const segmentStyles = StyleSheet.create({
   },
 
   titleText: {
-    fontSize: 24,
+    fontSize: 18,
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+    letterSpacing: 2,
     paddingBottom: 8,
     borderBottomWidth: 1,
     marginBottom: 8,
   },
 
   modeText: {
-    fontSize: 72,
+    fontSize: 96,
     fontWeight: 'bold',
-    textTransform: 'uppercase',
-    letterSpacing: 2
   },
 
   secondsText: {
-    fontSize: 36,
+    fontSize: 64,
     fontWeight: 'bold',
   },
 
