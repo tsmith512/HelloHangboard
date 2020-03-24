@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, Vibration, ToastAndroid } from 'react-native';
 import { Audio } from 'expo-av';
+import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 
 import Button from './Button';
 import CircuitHandler from '../lib/CircuitHandler';
@@ -89,11 +90,13 @@ export default class Segment extends React.Component {
 
   componentDidMount() {
     this.CircuitHandler = new CircuitHandler(this._updateStep);
+    activateKeepAwake();
   }
 
   componentWillUnmount() {
     // @TODO: Need to destroy the CircuitHandler object and clear its interval
     this.CircuitHandler.stop();
+    deactivateKeepAwake();
   }
 
   render() {
