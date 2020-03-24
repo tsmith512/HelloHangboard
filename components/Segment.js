@@ -123,19 +123,19 @@ const segmentStyles = StyleSheet.create({
   },
 
   screenready: {
-    backgroundColor: '#6699CC',
+    backgroundColor: '#007AFF',
   },
 
   screenwarn: {
-    backgroundColor: '#FFCC33',
+    backgroundColor: '#FFCC00',
   },
 
   screenon: {
-    backgroundColor: '#FF3300',
+    backgroundColor: '#FF3B30',
   },
 
   screenoff: {
-    backgroundColor: '#FFCC33',
+    backgroundColor: '#FF9500',
   },
 
   screenrest: {

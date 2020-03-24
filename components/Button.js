@@ -19,26 +19,28 @@ const buttonStyles = StyleSheet.create({
   base: {
     margin: 16,
     padding: 16,
-    backgroundColor: '#EEE',
+    backgroundColor: '#333333',
     borderRadius: 4,
-    borderColor: '#CCCCCC',
+    borderColor: '#222222',
     borderWidth: 1,
     shadowColor: '#000000',
-    shadowOpacity: .025,
+    shadowOpacity: .25,
+    shadowOffset: {height: 1, width: 1},
+    elevation: 4,
   },
 
   text: {
-    color: '#333333',
+    color: '#EEEEEE',
     fontWeight: 'bold',
     textTransform:  'uppercase',
-    letterSpacing: 1
+    letterSpacing: 1,
   },
 
   go: {
-    color: '#009900'
+    color: '#4CD964'
   },
 
   stop: {
-    color: '#CC0000'
+    color: '#FF3B30'
   }
 });

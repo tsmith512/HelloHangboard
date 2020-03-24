@@ -1,20 +1,20 @@
 import * as React from 'react';
-import { StyleSheet, Text } from 'react-native';
-
+import { Image, StyleSheet, Text } from 'react-native';
+import titleImage from '../assets/title.png';
 
 export default class Title extends React.Component {
   render() {
     return (
-      <Text style={headlineStyles.title}>Hello, Hangboard</Text>
+      <Image source={titleImage} style={{ width: 285, height: 68 }} />
     )
   }
 }
 
 const headlineStyles = StyleSheet.create({
   title: {
-    color: '#FFFFFF',
+    color: '#666666',
     fontSize: 36,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     margin: 16
   }
 });
