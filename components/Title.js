@@ -16,7 +16,6 @@ const headlineStyles = StyleSheet.create({
   title: {
     color: '#666666',
     fontSize: 36,
-    // fontWeight: 'bold',
     margin: 16,
   }
 });

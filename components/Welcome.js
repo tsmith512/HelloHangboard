@@ -16,18 +16,18 @@ export default class Welcome extends React.Component {
   }
 
   render() {
+    const workoutsIndex = Object.keys(Workouts).map((workoutID) => (
+      <View style={welcomeStyles.workoutWrapper}>
+        <Button title={Workouts[workoutID].title} class='dark' onPress={() => this._start(workoutID)} />
+        <Text style={welcomeStyles.workoutDescription}>{Workouts[workoutID].description}</Text>
+      </View>
+    ));
+
     return (
       <View style={welcomeStyles.container}>
         <View style={welcomeStyles.main}>
           <Title />
-          <View style={welcomeStyles.workoutWrapper}>
-            <Button title={Workouts.joe.title} class='dark' onPress={() => this._start('joe')} />
-            <Text style={welcomeStyles.workoutDescription}>{Workouts.joe.description}</Text>
-          </View>
-          <View style={welcomeStyles.workoutWrapper}>
-            <Button title={Workouts.rei.title} class='dark' onPress={() => this._start('rei')} />
-            <Text style={welcomeStyles.workoutDescription}>{Workouts.rei.description}</Text>
-          </View>
+          {workoutsIndex}
           <Text style={welcomeStyles.footer}>A "Hello World" grown up just enough to hurt you.</Text>
         </View>
       </View>
