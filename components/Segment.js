@@ -54,7 +54,12 @@ export default class Segment extends React.Component {
 
     // In a warning/rest state:
     if (['warn', 'rest'].indexOf(data.step.mode) > -1) {
-      // Do a 3-beep countdown at the end:
+      // Low tone to start a rest
+      if (name == 'new step' && data.step.mode == 'rest') {
+        this._beep('low');
+      }
+
+      // Do a 3-beep countdown at the end of either state
       if (data.remaining < 3) {
         this._beep('low');
       }

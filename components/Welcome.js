@@ -17,7 +17,7 @@ export default class Welcome extends React.Component {
 
   render() {
     const workoutsIndex = Object.keys(Workouts).map((workoutID) => (
-      <View style={welcomeStyles.workoutWrapper}>
+      <View style={welcomeStyles.workoutWrapper} key={workoutID}>
         <Button title={Workouts[workoutID].title} class='dark' onPress={() => this._start(workoutID)} />
         <Text style={welcomeStyles.workoutDescription}>{Workouts[workoutID].description}</Text>
       </View>
