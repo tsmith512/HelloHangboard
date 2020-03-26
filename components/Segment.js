@@ -17,6 +17,8 @@ export default class Segment extends React.Component {
     this.state = {
       mode: false,
       remaining: false,
+      stepsTotal: false,
+      stepsCurrent: false,
       buttonText: 'Start',
       buttonClass: 'go'
     };
@@ -84,6 +86,8 @@ export default class Segment extends React.Component {
       return {
         mode: data.step.mode,
         remaining: data.remaining,
+        stepsCurrent: data.progress[0],
+        stepsTotal: data.progress[1],
         buttonText: (data.step.mode == "ready") ? 'Start' : 'Exit',
       }
     });
@@ -93,7 +97,6 @@ export default class Segment extends React.Component {
     await this.tones[tone].playAsync();
     this.tones[tone].setPositionAsync(0);
     try {
-      // Your sound is playing!
     } catch (error) {
       console.log(error);
     }
@@ -105,15 +108,11 @@ export default class Segment extends React.Component {
   }
 
   componentWillUnmount() {
-    // @TODO: Need to destroy the CircuitHandler object and clear its interval
     this.CircuitHandler.stop();
     deactivateKeepAwake();
   }
 
   render() {
-    // @TODO: The title should come from the workout object, but at the moment
-    // we only have one, and I don't have a Workout class yet, so just hardcode
-    // it because that's how responsible engineering works, right?
     return (
       <View style={[segmentStyles.container, segmentStyles['container' + this.state.mode]]}>
         <View style={[segmentStyles.screen, segmentStyles['screen' + this.state.mode]]}>
@@ -121,6 +120,7 @@ export default class Segment extends React.Component {
           {this.state.mode == 'ready' && <Text style={segmentStyles.descText}>{this.workout.description}</Text>}
           <Text style={segmentStyles.modeText}>{this.state.mode}</Text>
           {this.state.remaining !== false && <Text style={segmentStyles.secondsText}>{this.state.remaining}</Text>}
+          {this.state.remaining !== false && <Text style={segmentStyles.progressText}>{this.state.stepsCurrent} / {this.state.stepsTotal}</Text>}
           <Button title={this.state.buttonText} class='light' onPress={() => this._button()} />
         </View>
       </View>
@@ -185,5 +185,9 @@ const segmentStyles = StyleSheet.create({
     fontSize: 64,
     fontWeight: 'bold',
   },
+
+  progressText: {
+    fontSize: 18,
+  }
 
 });
