@@ -114,7 +114,7 @@ export default class Segment extends React.Component {
 
   render() {
     return (
-      <View style={[segmentStyles.container, segmentStyles['container' + this.state.mode]]}>
+      <View style={segmentStyles.container}>
         <View style={[segmentStyles.screen, segmentStyles['screen' + this.state.mode]]}>
           <Text style={segmentStyles.titleText}>{this.workout.title}</Text>
           {this.state.mode == 'ready' && <Text style={segmentStyles.descText}>{this.workout.description}</Text>}
@@ -131,18 +131,12 @@ export default class Segment extends React.Component {
 const segmentStyles = StyleSheet.create({
   // @TODO: This is the same "screen" style from Welcome, make this shareable/DRY
   container: {
-    backgroundColor: '#EEEEEE',
+    backgroundColor: '#333333',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'stretch',
     padding: 32,
   },
-
-  containerready: { backgroundColor: '#003E80' },
-  containerwarn: { backgroundColor: '#806600' },
-  containeron: { backgroundColor: '#800600' },
-  containeroff: { backgroundColor: '#804A00' },
-  containerrest: { backgroundColor: '#206020' },
 
   screen: {
     flex: 1,

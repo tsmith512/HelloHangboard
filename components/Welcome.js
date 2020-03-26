@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, ToastAndroid } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 import Title from './Title';
 import Button from './Button';
@@ -40,7 +40,7 @@ const welcomeStyles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#DDDDDD',
+    backgroundColor: '#333333',
     padding: 16,
   },
 
