@@ -2,8 +2,10 @@ import * as React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { Audio } from 'expo-av';
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
+import { AntDesign } from '@expo/vector-icons';
 
 import Button from './Button';
+import CircuitProgress from './CircuitProgress';
 import CircuitHandler from '../lib/CircuitHandler';
 import Workouts from '../lib/Workouts';
 
@@ -19,6 +21,7 @@ export default class Segment extends React.Component {
       remaining: false,
       stepsTotal: false,
       stepsCurrent: false,
+      stepsProgress: 0,
       buttonText: 'Start',
       buttonClass: 'go'
     };
@@ -41,14 +44,12 @@ export default class Segment extends React.Component {
     this.tones.high.loadAsync(require('../assets/sounds/beep-high.wav'));
   }
 
-  _button() {
-    if (this.CircuitHandler.isWaiting()) {
-      // go
-      this.CircuitHandler.start();
-    } else {
-      // stop
-      this.props.navigation.navigate('Welcome');
-    }
+  _start = () => {
+    this.CircuitHandler.start();
+  }
+
+  _exit = () => {
+    this.props.navigation.navigate('Welcome');
   }
 
   _updateStep = (name, data) => {
@@ -89,6 +90,8 @@ export default class Segment extends React.Component {
         remaining: data.remaining,
         stepsCurrent: data.progress[0],
         stepsTotal: data.progress[1],
+        // @TODO: Move this into the progress bar class to hash out, because this is gross
+        stepsProgress: (data.progress[0] / data.progress[1] * 100) + "%",
         buttonText: (data.step.mode == "ready") ? 'Start' : 'Exit',
       }
     });
@@ -117,12 +120,14 @@ export default class Segment extends React.Component {
     return (
       <View style={segmentStyles.container}>
         <View style={[segmentStyles.screen, segmentStyles['screen' + this.state.mode]]}>
+          <AntDesign style={segmentStyles.closeButton} name="closecircleo" size={32} color="white" onPress={this._exit} />
           <Text style={segmentStyles.titleText}>{this.workout.title}</Text>
           {this.state.remaining !== false && <Text style={segmentStyles.progressText}>Step {this.state.stepsCurrent} / {this.state.stepsTotal}</Text>}
+          {this.state.remaining !== false && <CircuitProgress percentage={this.state.stepsProgress} />}
           {this.state.mode == 'ready' && <Text style={segmentStyles.descText}>{this.workout.description}</Text>}
           {this.state.label && <Text style={segmentStyles.modeText}>{this.state.label}</Text>}
           {this.state.remaining !== false && <Text style={segmentStyles.secondsText}>{this.state.remaining}</Text>}
-          <Button title={this.state.buttonText} class='light' onPress={() => this._button()} />
+          {this.state.mode == 'ready' && <AntDesign style={segmentStyles.goButton} name="play" size={64} color="white" onPress={this._start} />}
         </View>
       </View>
     )
@@ -154,6 +159,12 @@ const segmentStyles = StyleSheet.create({
   screenoff: { backgroundColor: '#FF9500' },
   screenrest: { backgroundColor: '#66CC66' },
 
+  closeButton: {
+    position: 'absolute',
+    top: 16,
+    right: 16,
+  },
+
   titleText: {
     fontSize: 16,
     textTransform: 'uppercase',
@@ -171,6 +182,12 @@ const segmentStyles = StyleSheet.create({
     marginTop: 16,
   },
 
+  progressText: {
+    marginTop: 24,
+    fontSize: 14,
+    textTransform: 'uppercase',
+  },
+
   modeText: {
     fontSize: 96,
     fontWeight: 'bold',
@@ -181,8 +198,10 @@ const segmentStyles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
-  progressText: {
-    fontSize: 18,
-  }
+
+  goButton: {
+    marginTop: 32,
+  },
+
 
 });
