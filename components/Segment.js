@@ -85,6 +85,7 @@ export default class Segment extends React.Component {
     this.setState((previousState) => {
       return {
         mode: data.step.mode,
+        label: data.step.label,
         remaining: data.remaining,
         stepsCurrent: data.progress[0],
         stepsTotal: data.progress[1],
@@ -117,10 +118,10 @@ export default class Segment extends React.Component {
       <View style={segmentStyles.container}>
         <View style={[segmentStyles.screen, segmentStyles['screen' + this.state.mode]]}>
           <Text style={segmentStyles.titleText}>{this.workout.title}</Text>
+          {this.state.remaining !== false && <Text style={segmentStyles.progressText}>Step {this.state.stepsCurrent} / {this.state.stepsTotal}</Text>}
           {this.state.mode == 'ready' && <Text style={segmentStyles.descText}>{this.workout.description}</Text>}
-          <Text style={segmentStyles.modeText}>{this.state.mode}</Text>
+          {this.state.label && <Text style={segmentStyles.modeText}>{this.state.label}</Text>}
           {this.state.remaining !== false && <Text style={segmentStyles.secondsText}>{this.state.remaining}</Text>}
-          {this.state.remaining !== false && <Text style={segmentStyles.progressText}>{this.state.stepsCurrent} / {this.state.stepsTotal}</Text>}
           <Button title={this.state.buttonText} class='light' onPress={() => this._button()} />
         </View>
       </View>
