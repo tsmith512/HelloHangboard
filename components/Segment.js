@@ -102,6 +102,7 @@ export default class Segment extends React.Component {
     this.tones[tone].setPositionAsync(0);
     try {
     } catch (error) {
+      // @TODO: Error to console is not gonna work in prod...
       console.log(error);
     }
   }
