@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 // import { Audio } from 'expo-av';
+import { Player } from '@react-native-community/audio-toolkit';
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 import { AntDesign } from '@expo/vector-icons';
 
