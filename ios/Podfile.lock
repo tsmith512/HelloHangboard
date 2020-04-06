@@ -2,9 +2,6 @@ PODS:
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
   - EXAppLoaderProvider (8.0.0)
-  - EXAV (8.0.0):
-    - UMCore
-    - UMPermissionsInterface
   - EXConstants (8.0.0):
     - UMConstantsInterface
     - UMCore
@@ -280,7 +277,6 @@ PODS:
 DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXAppLoaderProvider (from `../node_modules/expo-app-loader-provider/ios`)
-  - EXAV (from `../node_modules/expo-av/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
   - EXErrorRecovery (from `../node_modules/expo-error-recovery/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
@@ -347,9 +343,6 @@ EXTERNAL SOURCES:
   EXAppLoaderProvider:
     :path: !ruby/object:Pathname
     path: "../node_modules/expo-app-loader-provider/ios"
-  EXAV:
-    :path: !ruby/object:Pathname
-    path: "../node_modules/expo-av/ios"
   EXConstants:
     :path: !ruby/object:Pathname
     path: "../node_modules/expo-constants/ios"
@@ -481,7 +474,6 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   EXAppLoaderProvider: f6aeb45ee81887811b34eee5c5f235a6111d58d0
-  EXAV: bd1c889906adac7f5b9f59a5cb993219564e26f2
   EXConstants: e287774d0d32634ddaef614f2e488c550c6deefc
   EXErrorRecovery: 5e1d671b4ce87e47c6dfd7ffa858d8d730f24777
   EXFileSystem: fa8ecad925ad984681910a2273930f7255a0a9b5
