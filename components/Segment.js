@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { Player } from '@react-native-community/audio-toolkit';
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
-import { AntDesign } from '@expo/vector-icons';
+import { Icon } from 'react-native-vector-icons/AntDesign';
 
 import CircuitProgress from './CircuitProgress';
 import CircuitHandler from '../lib/CircuitHandler';
@@ -113,14 +113,14 @@ export default class Segment extends React.Component {
     return (
       <View style={segmentStyles.container}>
         <View style={[segmentStyles.screen, segmentStyles['screen' + this.state.mode]]}>
-          <AntDesign style={segmentStyles.closeButton} name="closecircleo" size={32} color="white" onPress={this._exit} />
+          <Icon style={segmentStyles.closeButton} name="closecircleo" size={32} color="white" onPress={this._exit} />
           <Text style={segmentStyles.titleText}>{this.workout.title}</Text>
           {this.state.remaining !== false && <Text style={segmentStyles.progressText}>Step {this.state.stepsCurrent} / {this.state.stepsTotal}</Text>}
           {this.state.remaining !== false && <CircuitProgress percentage={this.state.stepsProgress} />}
           {this.state.mode == 'ready' && <Text style={segmentStyles.descText}>{this.workout.description}</Text>}
           {this.state.label && <Text style={segmentStyles.modeText}>{this.state.label}</Text>}
           {this.state.remaining !== false && <Text style={segmentStyles.secondsText}>{this.state.remaining}</Text>}
-          {this.state.mode == 'ready' && <AntDesign style={segmentStyles.goButton} name="play" size={64} color="white" onPress={this._start} />}
+          {this.state.mode == 'ready' && <Icon style={segmentStyles.goButton} name="play" size={64} color="white" onPress={this._start} />}
         </View>
       </View>
     )

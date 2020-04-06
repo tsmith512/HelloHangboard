@@ -44,5 +44,6 @@ target 'HelloHangboard' do
   # react-native-cli autolinking
   use_native_modules!
   pod 'ReactNativeAudioToolkit', :path => '../node_modules/@react-native-community/audio-toolkit'
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
 end
