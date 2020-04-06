@@ -37,9 +37,9 @@ export default class Segment extends React.Component {
   }
 
   _loadNotificationSounds = async() => {
-    this.tones.low = new Player('beep-low.wav', { autoDestroy: false }).prepare();
-    this.tones.regular = new Player('beep-regular.wav', { autoDestroy: false }).prepare();
-    this.tones.high = new Player('beep-high.wav', { autoDestroy: false }).prepare();
+    this.tones.low = new Player('beep_low.wav', { autoDestroy: false }).prepare();
+    this.tones.regular = new Player('beep_regular.wav', { autoDestroy: false }).prepare();
+    this.tones.high = new Player('beep_high.wav', { autoDestroy: false }).prepare();
   }
 
   _start = () => {
