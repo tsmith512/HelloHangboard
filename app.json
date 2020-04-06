@@ -29,6 +29,9 @@
     ],
     "ios": {
       "supportsTablet": false
-    }
-  }
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
+  },
+  "displayName": "Hello Hangboard",
+  "name": "HelloHangboard"
 }

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import { Audio } from 'expo-av';
+// import { Audio } from 'expo-av';
+import { Player } from '@react-native-community/audio-toolkit';
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 import { AntDesign } from '@expo/vector-icons';
 
@@ -36,12 +37,9 @@ export default class Segment extends React.Component {
   }
 
   _loadNotificationSounds = async() => {
-    this.tones.low = new Audio.Sound();
-    this.tones.low.loadAsync(require('../assets/sounds/beep-low.wav'));
-    this.tones.regular = new Audio.Sound();
-    this.tones.regular.loadAsync(require('../assets/sounds/beep-regular.wav'));
-    this.tones.high = new Audio.Sound();
-    this.tones.high.loadAsync(require('../assets/sounds/beep-high.wav'));
+    this.tones.low = new Player('beep_low.wav', { autoDestroy: false }).prepare();
+    this.tones.regular = new Player('beep_regular.wav', { autoDestroy: false }).prepare();
+    this.tones.high = new Player('beep_high.wav', { autoDestroy: false }).prepare();
   }
 
   _start = () => {
@@ -53,8 +51,6 @@ export default class Segment extends React.Component {
   }
 
   _updateStep = (name, data) => {
-    const beep = new Audio.Sound();
-
     // In a warning/rest state:
     if (['warn', 'rest'].indexOf(data.step.mode) > -1) {
       // Low tone to start a rest
@@ -98,13 +94,8 @@ export default class Segment extends React.Component {
   }
 
   _beep = async(tone) => {
-    await this.tones[tone].playAsync();
-    this.tones[tone].setPositionAsync(0);
-    try {
-    } catch (error) {
-      // @TODO: Error to console is not gonna work in prod...
-      console.log(error);
-    }
+    this.tones[tone].seek(0);
+    this.tones[tone].play();
   }
 
   componentDidMount() {
@@ -114,6 +105,9 @@ export default class Segment extends React.Component {
 
   componentWillUnmount() {
     this.CircuitHandler.stop();
+    this.tones.low.destroy();
+    this.tones.regular.destroy();
+    this.tones.high.destroy();
     deactivateKeepAwake();
   }
 
