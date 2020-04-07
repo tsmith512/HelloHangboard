@@ -337,8 +337,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Apple Development: Taylor Smith (K2M69884BP)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development: Taylor Smith (K2M69884BP)";
+				CODE_SIGN_IDENTITY = "Apple Distribution: Spartan Systems, LLC (G6EQB4FDGD)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution: Spartan Systems, LLC (G6EQB4FDGD)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = G6EQB4FDGD;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -360,7 +360,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -392,8 +392,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Apple Development: Taylor Smith (K2M69884BP)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development: Taylor Smith (K2M69884BP)";
+				CODE_SIGN_IDENTITY = "Apple Distribution: Spartan Systems, LLC (G6EQB4FDGD)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution: Spartan Systems, LLC (G6EQB4FDGD)";
 				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = G6EQB4FDGD;
 				ENABLE_NS_ASSERTIONS = NO;
