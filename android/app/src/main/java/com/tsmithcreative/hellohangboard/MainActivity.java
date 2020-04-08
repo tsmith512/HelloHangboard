@@ -1,4 +1,4 @@
-package com.hellohangboard;
+package com.tsmithcreative.hellohangboard;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

@@ -1,4 +1,4 @@
-package com.hellohangboard.generated;
+package com.tsmithcreative.hellohangboard.generated;
 
 import java.util.Arrays;
 import java.util.List;
