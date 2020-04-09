@@ -3,43 +3,24 @@ format_version: '8'
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: react-native
 trigger_map:
-- push_branch: master
-  workflow: primary
-- push_branch: actual-fix-android
-  workflow: android
 - pull_request_source_branch: "*"
   workflow: primary
 workflows:
   primary:
-    description: "## Configure Android part of the deploy workflow\n\nTo generate
-      a signed APK:\n\n1. Open the **Workflow** tab of your project on Bitrise.io\n1.
-      Add **Sign APK step right after Android Build step**\n1. Click on **Code Signing**
-      tab\n1. Find the **ANDROID KEYSTORE FILE** section\n1. Click or drop your file
-      on the upload file field\n1. Fill the displayed 3 input fields:\n1. **Keystore
-      password**\n1. **Keystore alias**\n1. **Private key password**\n1. Click on
-      **[Save metadata]** button\n\nThat's it! From now on, **Sign APK** step will
-      receive your uploaded files.\n\n## Configure iOS part of the deploy workflow\n\nTo
-      generate IPA:\n\n1. Open the **Workflow** tab of your project on Bitrise.io\n1.
-      Click on **Code Signing** tab\n1. Find the **PROVISIONING PROFILE** section\n1.
-      Click or drop your file on the upload file field\n1. Find the **CODE SIGNING
-      IDENTITY** section\n1. Click or drop your file on the upload file field\n1.
-      Click on **Workflows** tab\n1. Select deploy workflow\n1. Select **Xcode Archive
-      & Export for iOS** step\n1. Open **Force Build Settings** input group\n1. Specify
-      codesign settings\nSet **Force code signing with Development Team**, **Force
-      code signing with Code Signing Identity**  \nand **Force code signing with Provisioning
-      Profile** inputs regarding to the uploaded codesigning files\n1. Specify manual
-      codesign style\nIf the codesigning files, are generated manually on the Apple
-      Developer Portal,  \nyou need to explicitly specify to use manual coedsign settings
-      \ \n(as ejected rn projects have xcode managed codesigning turned on).  \nTo
-      do so, add 'CODE_SIGN_STYLE=\"Manual\"' to 'Additional options for xcodebuild
-      call' input\n\n## To run this workflow\n\nIf you want to run this workflow manually:\n\n1.
-      Open the app's build list page\n2. Click on **[Start/Schedule a Build]** button\n3.
-      Select **deploy** in **Workflow** dropdown input\n4. Click **[Start Build]**
-      button\n\nOr if you need this workflow to be started by a GIT event:\n\n1. Click
-      on **Triggers** tab\n2. Setup your desired event (push/tag/pull) and select
-      **deploy** workflow\n3. Click on **[Done]** and then **[Save]** buttons\n\nThe
-      next change in your repository that matches any of your trigger map event will
-      start **deploy** workflow.\n"
+    description: "## Configure iOS part of the deploy workflow\n\nTo generate IPA:\n\n1.
+      Open the **Workflow** tab of your project on Bitrise.io\n1. Click on **Code
+      Signing** tab\n1. Find the **PROVISIONING PROFILE** section\n1. Click or drop
+      your file on the upload file field\n1. Find the **CODE SIGNING IDENTITY** section\n1.
+      Click or drop your file on the upload file field\n1. Click on **Workflows**
+      tab\n1. Select deploy workflow\n1. Select **Xcode Archive & Export for iOS**
+      step\n1. Open **Force Build Settings** input group\n1. Specify codesign settings\nSet
+      **Force code signing with Development Team**, **Force code signing with Code
+      Signing Identity**  \nand **Force code signing with Provisioning Profile** inputs
+      regarding to the uploaded codesigning files\n1. Specify manual codesign style\nIf
+      the codesigning files, are generated manually on the Apple Developer Portal,
+      \ \nyou need to explicitly specify to use manual coedsign settings  \n(as ejected
+      rn projects have xcode managed codesigning turned on).  \nTo do so, add 'CODE_SIGN_STYLE=\"Manual\"'
+      to 'Additional options for xcodebuild call' input\n"
     steps:
     - activate-ssh-key@4.0.3:
         run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
@@ -49,7 +30,8 @@ workflows:
         - command: install
     - set-xcode-build-number@1:
         inputs:
-        - build_short_version_string: '1.0'
+        - build_short_version_string: 1.0.$BITRISE_BUILD_NUMBER
+        - build_version: 1.0.$BITRISE_BUILD_NUMBER
         - plist_path: ios/HelloHangboard/Info.plist
     - certificate-and-profile-installer@1.10.1: {}
     - ios-auto-provision@1:
@@ -67,95 +49,36 @@ workflows:
         - configuration: Release
         - export_method: "$BITRISE_EXPORT_METHOD"
         - force_team_id: "$BITRISE_IOS_DEVELOPMENT_TEAM"
+        - artifact_name: "$BITRISE_APP_TITLE-$XCODE_BUNDLE_VERSION-$BITRISE_BUILD_NUMBER"
         - xcodebuild_options: "-UseModernBuildSystem=NO"
     - deploy-to-bitrise-io@1.9.2: {}
-  backup:
-    description: "## Configure Android part of the deploy workflow\n\nTo generate
-      a signed APK:\n\n1. Open the **Workflow** tab of your project on Bitrise.io\n1.
-      Add **Sign APK step right after Android Build step**\n1. Click on **Code Signing**
-      tab\n1. Find the **ANDROID KEYSTORE FILE** section\n1. Click or drop your file
-      on the upload file field\n1. Fill the displayed 3 input fields:\n1. **Keystore
-      password**\n1. **Keystore alias**\n1. **Private key password**\n1. Click on
-      **[Save metadata]** button\n\nThat's it! From now on, **Sign APK** step will
-      receive your uploaded files.\n\n## Configure iOS part of the deploy workflow\n\nTo
-      generate IPA:\n\n1. Open the **Workflow** tab of your project on Bitrise.io\n1.
-      Click on **Code Signing** tab\n1. Find the **PROVISIONING PROFILE** section\n1.
-      Click or drop your file on the upload file field\n1. Find the **CODE SIGNING
-      IDENTITY** section\n1. Click or drop your file on the upload file field\n1.
-      Click on **Workflows** tab\n1. Select deploy workflow\n1. Select **Xcode Archive
-      & Export for iOS** step\n1. Open **Force Build Settings** input group\n1. Specify
-      codesign settings\nSet **Force code signing with Development Team**, **Force
-      code signing with Code Signing Identity**  \nand **Force code signing with Provisioning
-      Profile** inputs regarding to the uploaded codesigning files\n1. Specify manual
-      codesign style\nIf the codesigning files, are generated manually on the Apple
-      Developer Portal,  \nyou need to explicitly specify to use manual coedsign settings
-      \ \n(as ejected rn projects have xcode managed codesigning turned on).  \nTo
-      do so, add 'CODE_SIGN_STYLE=\"Manual\"' to 'Additional options for xcodebuild
-      call' input\n\n## To run this workflow\n\nIf you want to run this workflow manually:\n\n1.
-      Open the app's build list page\n2. Click on **[Start/Schedule a Build]** button\n3.
-      Select **deploy** in **Workflow** dropdown input\n4. Click **[Start Build]**
-      button\n\nOr if you need this workflow to be started by a GIT event:\n\n1. Click
-      on **Triggers** tab\n2. Setup your desired event (push/tag/pull) and select
-      **deploy** workflow\n3. Click on **[Done]** and then **[Save]** buttons\n\nThe
-      next change in your repository that matches any of your trigger map event will
-      start **deploy** workflow.\n"
-    steps:
-    - activate-ssh-key@4.0.3:
-        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
-    - git-clone@4.0.17: {}
-    - script@1.1.5:
-        title: Do anything with Script step
-    - npm@1.1.0:
+    - amazon-s3-uploader@1:
         inputs:
-        - command: install
-    - install-missing-android-tools@2.3.7:
-        inputs:
-        - gradlew_path: "$PROJECT_LOCATION/gradlew"
-    - android-build@0.10.0:
-        inputs:
-        - project_location: "$PROJECT_LOCATION"
-        - module: "$MODULE"
-        - variant: "$VARIANT"
-    - certificate-and-profile-installer@1.10.1: {}
-    - xcode-archive@2.7.0:
-        inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
-        - scheme: "$BITRISE_SCHEME"
-        - configuration: Release
-        - export_method: "$BITRISE_EXPORT_METHOD"
-        - force_team_id: "$BITRISE_IOS_DEVELOPMENT_TEAM"
-        - xcodebuild_options: "-UseModernBuildSystem=NO"
-    - deploy-to-bitrise-io@1.9.2: {}
+        - bucket_region: us-west-1
+        - file_access_level: private
+        - file_path: "$BITRISE_IPA_PATH"
+        - aws_access_key: "$S3_ACCESS_KEY"
+        - aws_secret_key: "$S3_SECRET_KEY"
+        - bucket_name: "$S3_BUCKET_NAME"
+        - path_in_bucket: "$BITRISE_APP_TITLE"
   android:
-    description: "## Configure Android part of the deploy workflow\n\nTo generate
-      a signed APK:\n\n1. Open the **Workflow** tab of your project on Bitrise.io\n1.
-      Add **Sign APK step right after Android Build step**\n1. Click on **Code Signing**
-      tab\n1. Find the **ANDROID KEYSTORE FILE** section\n1. Click or drop your file
-      on the upload file field\n1. Fill the displayed 3 input fields:\n1. **Keystore
-      password**\n1. **Keystore alias**\n1. **Private key password**\n1. Click on
-      **[Save metadata]** button\n\nThat's it! From now on, **Sign APK** step will
-      receive your uploaded files.\n\n## Configure iOS part of the deploy workflow\n\nTo
-      generate IPA:\n\n1. Open the **Workflow** tab of your project on Bitrise.io\n1.
-      Click on **Code Signing** tab\n1. Find the **PROVISIONING PROFILE** section\n1.
-      Click or drop your file on the upload file field\n1. Find the **CODE SIGNING
-      IDENTITY** section\n1. Click or drop your file on the upload file field\n1.
-      Click on **Workflows** tab\n1. Select deploy workflow\n1. Select **Xcode Archive
-      & Export for iOS** step\n1. Open **Force Build Settings** input group\n1. Specify
-      codesign settings\nSet **Force code signing with Development Team**, **Force
-      code signing with Code Signing Identity**  \nand **Force code signing with Provisioning
-      Profile** inputs regarding to the uploaded codesigning files\n1. Specify manual
-      codesign style\nIf the codesigning files, are generated manually on the Apple
-      Developer Portal,  \nyou need to explicitly specify to use manual coedsign settings
-      \ \n(as ejected rn projects have xcode managed codesigning turned on).  \nTo
-      do so, add 'CODE_SIGN_STYLE=\"Manual\"' to 'Additional options for xcodebuild
-      call' input\n\n## To run this workflow\n\nIf you want to run this workflow manually:\n\n1.
-      Open the app's build list page\n2. Click on **[Start/Schedule a Build]** button\n3.
-      Select **deploy** in **Workflow** dropdown input\n4. Click **[Start Build]**
-      button\n\nOr if you need this workflow to be started by a GIT event:\n\n1. Click
-      on **Triggers** tab\n2. Setup your desired event (push/tag/pull) and select
-      **deploy** workflow\n3. Click on **[Done]** and then **[Save]** buttons\n\nThe
-      next change in your repository that matches any of your trigger map event will
-      start **deploy** workflow.\n"
+    description: |
+      ## Configure Android part of the deploy workflow
+
+      To generate a signed APK:
+
+      1. Open the **Workflow** tab of your project on Bitrise.io
+      1. Add **Sign APK step right after Android Build step**
+      1. Click on **Code Signing** tab
+      1. Find the **ANDROID KEYSTORE FILE** section
+      1. Click or drop your file on the upload file field
+      1. Fill the displayed 3 input fields:
+      1. **Keystore password**
+      1. **Keystore alias**
+      1. **Private key password**
+      1. Click on **[Save metadata]** button
+
+      That's it! From now on, **Sign APK** step will receive your uploaded files.
     steps:
     - activate-ssh-key@4.0.3:
         run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
@@ -169,13 +92,28 @@ workflows:
     - change-android-versioncode-and-versionname@1:
         inputs:
         - build_gradle_path: "$BITRISE_SOURCE_DIR/android/app/build.gradle"
-        - new_version_name: 1.0.0
+        - new_version_name: 1.0.$BITRISE_BUILD_NUMBER
     - android-build@0:
         inputs:
         - variant: release
         - project_location: "$BITRISE_SOURCE_DIR/android/"
-    - sign-apk@1: {}
+    - sign-apk@1:
+        inputs:
+        - output_name: "$BITRISE_APP_TITLE-$ANDROID_VERSION_NAME-$BITRISE_BUILD_NUMBER-signed"
     - deploy-to-bitrise-io@1.9.2: {}
+    - amazon-s3-uploader@1:
+        inputs:
+        - aws_access_key: "$S3_ACCESS_KEY"
+        - aws_secret_key: "$S3_SECRET_KEY"
+        - bucket_name: "$S3_BUCKET_NAME"
+        - bucket_region: us-west-1
+        - path_in_bucket: "$BITRISE_APP_TITLE"
+        - file_access_level: private
+        - file_path: "$BITRISE_SIGNED_APK_PATH"
+  combo:
+    after_run:
+    - primary
+    - android
 app:
   envs:
   - opts:
