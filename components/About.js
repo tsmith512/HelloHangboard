@@ -61,6 +61,7 @@ const aboutStyles = StyleSheet.create({
     position: 'absolute',
     top: 16,
     right: 16,
+    zIndex: 10,
   },
 
   paragraph: {
