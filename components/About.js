@@ -40,6 +40,13 @@ export default class About extends React.Component {
             to its setup and usage instructions as well as an experienced
             trainer before use.
           </Text>
+          <TouchableOpacity style={aboutStyles.linkButton} onPress={() => { Linking.openURL('https://tsmith.com')}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <AntDesign name="hearto" size={16} color="#0066CC" />
+              <Text style={{paddingLeft: 8}}>Created by</Text>
+              <Text style={{color: '#0066FF'}}>&nbsp;TSmith</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     );
