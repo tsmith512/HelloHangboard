@@ -166,6 +166,7 @@ const segmentStyles = StyleSheet.create({
     paddingBottom: 8,
     borderBottomWidth: 1,
     marginBottom: 8,
+    color: '#000000',
   },
 
   descText: {
@@ -173,22 +174,26 @@ const segmentStyles = StyleSheet.create({
     textAlign: 'center',
     fontStyle: 'italic',
     marginTop: 16,
+    color: '#000000',
   },
 
   progressText: {
     marginTop: 24,
     fontSize: 14,
     textTransform: 'uppercase',
+    color: '#000000',
   },
 
   modeText: {
     fontSize: 96,
     fontWeight: 'bold',
+    color: '#000000',
   },
 
   secondsText: {
     fontSize: 64,
     fontWeight: 'bold',
+    color: '#000000',
   },
 
 
