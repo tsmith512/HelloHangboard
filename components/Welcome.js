@@ -27,7 +27,7 @@ export default class Welcome extends React.Component {
     return (
       <View style={welcomeStyles.container}>
         <View style={welcomeStyles.main}>
-          <Title />
+          <Title center />
           {workoutsIndex}
           <TouchableOpacity onPress={() => {this.props.navigation.navigate('About')}}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>

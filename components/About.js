@@ -18,7 +18,7 @@ export default class About extends React.Component {
       <View style={aboutStyles.container}>
         <View style={aboutStyles.main}>
           <AntDesign style={aboutStyles.closeButton} name="closecircleo" size={32} color="black" onPress={this._exit} />
-          <Title />
+          <Title small />
           <Text style={{marginTop: 8, marginBottom: 8}}>Sources:</Text>
           <TouchableOpacity style={aboutStyles.linkButton} onPress={() => { Linking.openURL('https://www.rei.com/blog/climb/hangboard-training-101')}}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
