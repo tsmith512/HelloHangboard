@@ -6,6 +6,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import Welcome from './components/Welcome';
 import Segment from './components/Segment';
+import About from './components/About';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,7 @@ export default function App() {
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="Segment" component={Segment} />
+        <Stack.Screen name="About" component={About} />
       </Stack.Navigator>
     </NavigationContainer>
   );

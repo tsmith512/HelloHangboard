@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 
 import Title from './Title';
 import Button from './Button';
@@ -28,7 +29,12 @@ export default class Welcome extends React.Component {
         <View style={welcomeStyles.main}>
           <Title />
           {workoutsIndex}
-          <Text style={welcomeStyles.footer}>A "Hello World" grown up just enough to hurt you.</Text>
+          <TouchableOpacity onPress={() => {this.props.navigation.navigate('About')}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <AntDesign name="questioncircleo" size={16} color="#0066CC" />
+              <Text style={welcomeStyles.footerLink}>About, Resources, and Warnings</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -60,9 +66,9 @@ const welcomeStyles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  footer: {
-    color: '#999999',
+  footerLink: {
+    color: '#0066CC',
     fontStyle: 'italic',
-    textAlign: 'center',
+    paddingLeft: 8,
   },
 });
