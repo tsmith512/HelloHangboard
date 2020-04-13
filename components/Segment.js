@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Platform } from 'react-native';
 import { Player } from '@react-native-community/audio-toolkit';
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 import { AntDesign } from '@expo/vector-icons';
@@ -213,7 +213,7 @@ const segmentStyles = StyleSheet.create({
 
   modeText: {
     fontSize: 84,
-    fontFamily: 'sans-serif-condensed',
+    fontFamily: (Platform.OS == 'ios') ? 'HelveticaNeue-CondensedBlack' : 'sans-serif-condensed',
     fontWeight: 'bold',
     color: '#000000',
     textAlign: 'center',
