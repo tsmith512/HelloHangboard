@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Platform } from 'react-native';
 import { Player } from '@react-native-community/audio-toolkit';
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 import { AntDesign } from '@expo/vector-icons';
@@ -113,14 +113,20 @@ export default class Segment extends React.Component {
     return (
       <View style={segmentStyles.container}>
         <View style={[segmentStyles.screen, segmentStyles['screen' + this.state.mode]]}>
-          <AntDesign style={segmentStyles.closeButton} name="closecircleo" size={32} color="white" onPress={this._exit} />
           <Text style={segmentStyles.titleText}>{this.workout.title}</Text>
-          {this.state.remaining !== false && <Text style={segmentStyles.progressText}>Step {this.state.stepsCurrent} / {this.state.stepsTotal}</Text>}
-          {this.state.remaining !== false && <CircuitProgress percentage={this.state.stepsProgress} />}
+          {this.state.remaining !== false &&
+            <View style={segmentStyles.progressWrapper}>
+              <Text style={segmentStyles.progressText}>Step {this.state.stepsCurrent} / {this.state.stepsTotal}</Text>
+              <CircuitProgress percentage={this.state.stepsProgress} />
+            </View>
+          }
           {this.state.mode == 'ready' && <Text style={segmentStyles.descText}>{this.workout.description}</Text>}
           {this.state.label && <Text style={segmentStyles.modeText}>{this.state.label}</Text>}
-          {this.state.remaining !== false && <Text style={segmentStyles.secondsText}>{this.state.remaining}</Text>}
-          {this.state.mode == 'ready' && <AntDesign style={segmentStyles.goButton} name="play" size={64} color="white" onPress={this._start} />}
+          {this.state.remaining !== false && <Text style={segmentStyles.secondsText}>{this.state.remaining.toString().padStart(2, '0')}</Text>}
+          {this.state.mode != 'ready' && <AntDesign style={segmentStyles.iconButton} name="closecircleo" size={32} color="white" onPress={this._exit} />}
+          {this.state.mode != 'ready' && <AntDesign style={segmentStyles.iconShadow} name="closecircleo" size={32} color="black" />}
+          {this.state.mode == 'ready' && <AntDesign style={segmentStyles.iconButton} name="play" size={64} color="white" onPress={this._start} />}
+          {this.state.mode == 'ready' && <AntDesign style={segmentStyles.iconShadow} name="play" size={64} color="black" />}
         </View>
       </View>
     )
@@ -144,21 +150,33 @@ const segmentStyles = StyleSheet.create({
     borderRadius: 8,
     elevation: 4,
     padding: 16,
+    borderWidth: 4,
   },
 
-  screenready: { backgroundColor: '#007AFF' },
-  screenwarn: { backgroundColor: '#FFCC00' },
-  screenon: { backgroundColor: '#FF3B30' },
-  screenoff: { backgroundColor: '#FF9500' },
-  screenrest: { backgroundColor: '#66CC66' },
-
-  closeButton: {
-    position: 'absolute',
-    top: 16,
-    right: 16,
+  screenready: {
+    backgroundColor: '#007AFF',
+    borderColor: '#004999',
+  },
+  screenwarn: {
+    backgroundColor: '#FFCC00',
+    borderColor: '#997A00',
+  },
+  screenon: {
+    backgroundColor: '#FF3B30',
+    borderColor: '#990800',
+  },
+  screenoff: {
+    backgroundColor: '#FF9500',
+    borderColor: '#995A00',
+  },
+  screenrest: {
+    backgroundColor: '#66CC66',
+    borderColor: '#267326',
   },
 
   titleText: {
+    position: 'absolute',
+    top: 32,
     fontSize: 16,
     textTransform: 'uppercase',
     fontWeight: 'bold',
@@ -177,29 +195,52 @@ const segmentStyles = StyleSheet.create({
     color: '#000000',
   },
 
+  progressWrapper: {
+    position: 'absolute',
+    textAlign: 'center',
+    top: 64,
+    left: 16,
+    width: '100%',
+  },
+
   progressText: {
     marginTop: 24,
     fontSize: 14,
     textTransform: 'uppercase',
+    textAlign: 'center',
     color: '#000000',
   },
 
   modeText: {
-    fontSize: 96,
+    fontSize: 84,
+    fontFamily: (Platform.OS == 'ios') ? 'HelveticaNeue-CondensedBlack' : 'sans-serif-condensed',
     fontWeight: 'bold',
     color: '#000000',
+    textAlign: 'center',
+    textTransform: 'uppercase',
   },
 
   secondsText: {
-    fontSize: 64,
+    fontSize: 50,
     fontWeight: 'bold',
     color: '#000000',
+    position: 'absolute',
+    bottom: 96,
+    zIndex: 20,
   },
 
 
-  goButton: {
-    marginTop: 32,
+  iconButton: {
+    position: 'absolute',
+    bottom: 32,
+    zIndex: 10,
   },
 
-
+  iconShadow: {
+    position: 'absolute',
+    bottom: 30,
+    transform: [{ translateX: 2 }],
+    zIndex: 0,
+    opacity: 0.5,
+  },
 });
