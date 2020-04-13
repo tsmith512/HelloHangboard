@@ -28,9 +28,9 @@ export default class About extends React.Component {
             <Text style={[aboutStyles.warningText, aboutStyles.paragraph]}>
               Improper use of a hangboard can cause serious finger and tendon
               injury; don't strain to complete a set and do not train to the
-              failure point. Improper installation can cause a serious fall. Refer
-              to its setup and usage instructions as well as an experienced
-              trainer before use.
+              failure point. Improper installation can cause a serious fall.
+              Refer to manufacturer setup and usage instructions as well as an
+              experienced trainer before use.
             </Text>
           </View>
           <Link icon="hearto" title="Created by TSmith" href='https://tsmith.com' color='#CC0066'></Link>
