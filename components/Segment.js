@@ -114,13 +114,19 @@ export default class Segment extends React.Component {
       <View style={segmentStyles.container}>
         <View style={[segmentStyles.screen, segmentStyles['screen' + this.state.mode]]}>
           <Text style={segmentStyles.titleText}>{this.workout.title}</Text>
-          {this.state.remaining !== false && <Text style={segmentStyles.progressText}>Step {this.state.stepsCurrent} / {this.state.stepsTotal}</Text>}
-          {this.state.remaining !== false && <CircuitProgress percentage={this.state.stepsProgress} />}
+          {this.state.remaining !== false &&
+            <View style={segmentStyles.progressWrapper}>
+              <Text style={segmentStyles.progressText}>Step {this.state.stepsCurrent} / {this.state.stepsTotal}</Text>
+              <CircuitProgress percentage={this.state.stepsProgress} />
+            </View>
+          }
           {this.state.mode == 'ready' && <Text style={segmentStyles.descText}>{this.workout.description}</Text>}
           {this.state.label && <Text style={segmentStyles.modeText}>{this.state.label}</Text>}
           {this.state.remaining !== false && <Text style={segmentStyles.secondsText}>{this.state.remaining.toString().padStart(2, '0')}</Text>}
           {this.state.mode != 'ready' && <AntDesign style={segmentStyles.iconButton} name="closecircleo" size={32} color="white" onPress={this._exit} />}
+          {this.state.mode != 'ready' && <AntDesign style={segmentStyles.iconShadow} name="closecircleo" size={32} color="black" />}
           {this.state.mode == 'ready' && <AntDesign style={segmentStyles.iconButton} name="play" size={64} color="white" onPress={this._start} />}
+          {this.state.mode == 'ready' && <AntDesign style={segmentStyles.iconShadow} name="play" size={64} color="black" />}
         </View>
       </View>
     )
@@ -189,15 +195,25 @@ const segmentStyles = StyleSheet.create({
     color: '#000000',
   },
 
+  progressWrapper: {
+    position: 'absolute',
+    textAlign: 'center',
+    top: 64,
+    left: 16,
+    width: '100%',
+  },
+
   progressText: {
     marginTop: 24,
     fontSize: 14,
     textTransform: 'uppercase',
+    textAlign: 'center',
     color: '#000000',
   },
 
   modeText: {
     fontSize: 84,
+    fontFamily: 'sans-serif-condensed',
     fontWeight: 'bold',
     color: '#000000',
     textAlign: 'center',
@@ -208,14 +224,23 @@ const segmentStyles = StyleSheet.create({
     fontSize: 50,
     fontWeight: 'bold',
     color: '#000000',
+    position: 'absolute',
+    bottom: 96,
+    zIndex: 20,
   },
 
 
   iconButton: {
     position: 'absolute',
     bottom: 32,
-    opacity: .875,
+    zIndex: 10,
   },
 
-
+  iconShadow: {
+    position: 'absolute',
+    bottom: 30,
+    transform: [{ translateX: 2 }],
+    zIndex: 0,
+    opacity: 0.5,
+  },
 });

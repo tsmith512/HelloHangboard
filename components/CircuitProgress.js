@@ -17,9 +17,10 @@ export default class CircuitProgress extends React.Component {
 
 const circuitProgressStyles = StyleSheet.create({
   outside: {
-    width: '80%',
+    width: '100%',
     height: 10,
-    margin: 8,
+    marginTop: 8,
+    marginBottom: 8,
     borderColor: '#000000',
     borderWidth: 1,
   },
